@@ -1,0 +1,58 @@
+<?php
+	
+	declare(strict_types=1);
+	
+	/**
+	 * @date: 18.10.23
+	 * @time: 11:16
+	 */
+	
+	$arPaymentTypes = wpsgswissqr_mod_swissqr::getInstance()->getActivePaymentTypeKeys();
+	
+?>
+
+<?php echo wpsg_drawForm_Checkbox('swissqr_mod_swissqr_order_done', esc_html__('Auf Bestellabschlußseite anzeigen', 'swissqr'), $this->get_option('swissqr_mod_swissqr_order_done')); ?>
+<?php echo wpsg_drawForm_Checkbox('swissqr_mod_swissqr_customer_mail', esc_html__('An Kundenmail als PDF anhängen', 'swissqr'), $this->get_option('swissqr_mod_swissqr_customer_mail')); ?>
+
+<?php if ($this->hasMod('wpsg_mod_rechnungen')) { ?>
+	<?php echo wpsg_drawForm_Checkbox('swissqr_mod_swissqr_invoice_mail', esc_html__('An Rechnungsmail als PDF anhängen', 'swissqr'), $this->get_option('swissqr_mod_swissqr_invoice_mail')); ?>
+<?php } ?>
+
+<br />
+
+<?php echo wpsg_drawForm_TextStart(); ?>
+
+	<?php foreach ($this->arPayment as $payment_key => $payment_info) { ?>
+	
+		<label class="checkbox_row">
+			<input type="checkbox" <?php echo ((in_array($payment_key, $arPaymentTypes)?'checked="checked"':'')); ?> name="swissqr_mod_swissqr_payment_types[]" value="<?php echo $payment_key; ?>" />
+			<span><?php echo $payment_info['name']; ?></span>
+		</label>
+	
+	<?php } ?>
+	
+<?php echo wpsg_drawForm_TextEnd(esc_html__('Aktivierte Zahlungsarten', 'swissqr'), ['noP' => true]); ?>
+
+<br />
+
+<?php echo wpsg_drawForm_Input('swissqr_mod_swissqr_target_name', esc_html__('Empfänger Name', 'swissqr'), $this->get_option('swissqr_mod_swissqr_target_name')); ?>
+<?php echo wpsg_drawForm_Input('swissqr_mod_swissqr_target_street', esc_html__('Empfänger Straße', 'swissqr'), $this->get_option('swissqr_mod_swissqr_target_street')); ?>
+<?php echo wpsg_drawForm_Input('swissqr_mod_swissqr_target_zipcity', esc_html__('Empfänger PLZ/Stadt', 'swissqr'), $this->get_option('swissqr_mod_swissqr_target_zipcity')); ?>
+<?php echo wpsg_drawForm_Input('swissqr_mod_swissqr_target_countrycode', esc_html__('Empfänger Land (3166-1)', 'swissqr'), $this->get_option('swissqr_mod_swissqr_target_countrycode')); ?>
+<?php echo wpsg_drawForm_Input('swissqr_mod_swissqr_target_qriban', esc_html__('Empfänger QR IBAN', 'swissqr'), $this->get_option('swissqr_mod_swissqr_target_qriban')); ?>
+
+<br />
+
+<?php echo wpsg_drawForm_Input('swissqr_mod_swissqr_subject', esc_html__('Betreff für Zahlung', 'swissqr'), $this->get_option('swissqr_mod_swissqr_subject')); ?>
+
+<hr />
+
+<p>
+	<?php echo esc_html__('Beachten Sie bitte, das für swissQR die korrekten Werte übergeben werden müssen.', 'swissqr'); ?>
+</p>
+
+<style>
+	
+	.checkbox_row { display:flex; align-items:center; gap:0.5rem; }
+	
+</style>

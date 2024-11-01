@@ -1,0 +1,13 @@
+{
+    "name": "m1/wpsg_qr",
+    "authors": [
+        {
+            "name": "Daniel Schmitzer",
+            "email": "daniel@maennchen1.de"
+        }
+    ],
+    "require": {
+        "sprain/swiss-qr-bill": "4.10",
+        "fpdf/fpdf": "^1.86"
+    }
+}
